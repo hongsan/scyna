@@ -1,0 +1,134 @@
+syntax = "proto3";
+package scyna;
+
+option  optimize_for = CODE_SIZE;
+option  go_package = ".;scyna";
+
+message Configuration {
+  string NatsUrl = 1;
+  string NatsUsername = 2;
+  string NatsPassword = 3;
+  string DBHost = 4;
+  string DBUsername = 5;
+  string DBPassword = 6;
+  string DBLocation = 7;
+}
+
+/*session*/
+message CreateSessionRequest {
+  string Module = 1;
+  string Secret = 2;
+}
+
+message CreateSessionResponse {
+  uint64        SessionID = 1;
+  Configuration Config = 5;
+}
+
+message EndSessionSignal {
+  uint64 ID = 1;
+  uint32 Code = 2;
+}
+
+message UpdateSessionSignal {
+  uint64 ID = 1;
+}
+
+/*GENERATOR*/
+message GetIDResponse {
+  uint32 prefix = 1;
+  uint64 start = 2;
+  uint64 end = 3;
+}
+
+message GetSNRequest {
+  string key = 1;
+}
+
+message GetSNResponse {
+  uint32 prefix = 1;
+  uint64 start = 2;
+  uint64 end = 3;
+}
+
+/*LOG*/
+message WriteLogSignal {
+  uint64 time = 1;
+  uint32 level = 2;
+  string text = 3;
+  uint64 id = 4;
+  uint64 seq = 5;
+  bool   session = 6;
+}
+
+/*SETTING*/
+message WriteSettingRequest {
+  string Module = 1;
+  string Key = 2;
+  string Value = 3;
+}
+
+message ReadSettingRequest {
+  string Module = 1;
+  string Key = 2;
+}
+
+message ReadSettingResponse {
+  string Value = 1;
+}
+
+message SettingUpdatedSignal {
+  string Module = 1;
+  string Key = 2;
+  string Value = 3;
+}
+
+message RemoveSettingRequest {
+  string Module = 1;
+  string Key = 2;
+}
+
+/*CALL*/
+message WriteCallSignal {
+  uint64 id = 1;
+  string source = 2;
+  string caller_id = 3;
+  uint64 session_id = 4;
+  uint32 duration = 5;
+  bytes  request = 6;
+  bytes  response = 7;
+  uint32 status = 8;
+  uint64 time = 9;
+  uint32 day = 10;
+}
+
+/*Authentication*/
+message CreateAuthRequest {
+  string Organization = 1;
+  string Secret = 2;
+  string UserID = 3;
+  repeated string Apps = 4;
+}
+
+message CreateAuthResponse {
+  string Token = 1;
+  uint64 Expired = 2;
+}
+
+message GetAuthRequest {
+  string Token = 1;
+  string App = 2;
+}
+
+message GetAuthResponse {
+  string Token = 1;
+  uint64 Expired = 2;
+  string UserID = 3;
+}
+
+message LogoutRequest {
+  string Organization = 1;
+  string Secret = 2;
+  string UserID = 3;
+  string Token = 4;
+}
