@@ -2,8 +2,8 @@ package scyna_data
 
 import (
 	"log"
-	"scyna"
 
+	"github.com/hongsan/scyna"
 	"github.com/scylladb/gocqlx/v2/qb"
 )
 

@@ -2,10 +2,10 @@ package scyna_test
 
 import (
 	"fmt"
-	"scyna"
 	"testing"
 	"time"
 
+	"github.com/hongsan/scyna"
 	"google.golang.org/protobuf/proto"
 )
 

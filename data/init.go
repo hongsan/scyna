@@ -2,7 +2,8 @@ package scyna_data
 
 import (
 	"flag"
-	"scyna"
+
+	"github.com/hongsan/scyna"
 )
 
 func Init() {
